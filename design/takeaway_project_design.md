@@ -16,60 +16,90 @@
 
 ## 2. Design the Class System
 
-_Consider diagramming out the classes and their relationships. Take care to
-focus on the details you see as important, not everything. The diagram below
-uses asciiflow.com but you could also use excalidraw.com, draw.io, or miro.com_
-
-```
-┌────────────────────────────┐
-│ MusicPlayer                │
-│                            │
-│ - add(track)               │
-│ - all                      │
-│ - search_by_title(keyword) │
-│   => [tracks...]           │
-└───────────┬────────────────┘
-            │
-            │ owns a list of
-            ▼
-┌─────────────────────────┐
-│ Track(title, artist)    │
-│                         │
-│ - title                 │
-│ - artist                │
-│ - format                │
-│   => "TITLE by ARTIST"  │
-└─────────────────────────┘
-```
-
-_Also design the interface of each class in more detail._
+*Diagrammed on paper*
 
 ```ruby
-class MusicLibrary
-  def initialize
-    # ...
+class Dish
+  def initialize(name, price)
+    # name is a string, price is a float
   end
 
-  def add(track) # track is an instance of Track
-    # Track gets added to the library
-    # Returns nothing
+  def name
+    # returns name
   end
 
-  def all
-    # Returns a list of track objects
-  end
-  
-  def search_by_title(keyword) # keyword is a string
-    # Returns a list of tracks with titles that include the keyword
+  def price
+    # returns price
   end
 end
 
-class Track
-  def initialize(title, artist) # title and artist are both strings
+class Menu
+  def initialize
+    # @dishes is an array, initializes as empty
+  end
+  
+  def add(dish) # dish is an instance of Dish
+    # stores dish name and price as a hash in @dishes
+    # returns nothing
   end
 
-  def format
-    # Returns a string of the form "TITLE by ARTIST"
+  def list
+    # returns @dishes
+  end
+end
+
+class Order
+  def initialize(menu, order_number) # menu is an instance of Menu, 
+                                     # order_number is a string
+    # @items is an array initialized with [order_number]
+  end
+
+  def add(dish, quantity)
+    # extracts dish from @menu's @dishes
+    # adds quantity as a key-value pair
+    # pushes this hash into @items, without duplicating dish
+    # returns nothing
+  end
+
+  def list
+    # returns @items
+  end
+end
+
+class OrderSubtotaller
+  def initialize(order) # order is an instance of Order
+    @subtotalled_order # is an array
+  end
+
+  def subtotal(order)
+    # multiplies item price by quantity
+    # stores this in the item hash
+  end
+
+  def list
+    # returns @subtotalled_order
+  end
+end
+
+class Receipt
+  def initialize(subtotaller) # subtotaller is an instance of OrderSubtotaller
+    @grand_total # is a float (init 0.0)
+    @receipt # is an array
+  end
+
+  def calculate_grand_total
+    # adds subtotals to @grand_total
+    # returns nothing
+  end
+
+  def checkout(subtotaller)
+    # pushes subtotalled order into @receipt
+    # appends @grand_total to @receipt
+    # returns nothing
+  end
+
+  def read
+    # returns formatted @receipt
   end
 end
 ```
@@ -78,6 +108,12 @@ end
 
 _Create examples of the classes being used together in different situations and
 combinations that reflect the ways in which the system will be used._
+
+```ruby
+
+
+```
+
 
 ```ruby
 # EXAMPLE
